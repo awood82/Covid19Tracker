@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Covid19Tracker</string>
+    <string name="total_confirmed_cases">Total Confirmed Cases: %s</string>
+    <string name="currently_infected">Currently Infected: %s</string>
+    <string name="recovered">Recovered: %s</string>
+    <string name="deaths">Deaths: %s</string>
 </resources>
