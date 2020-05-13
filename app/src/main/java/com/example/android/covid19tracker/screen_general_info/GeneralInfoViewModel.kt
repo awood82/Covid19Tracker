@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.covid19tracker.domain.GeneralStats
-import com.example.android.covid19tracker.network.Network
+import com.example.android.covid19tracker.network.CovidApi
+import com.example.android.covid19tracker.network.asDomainModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -15,8 +16,8 @@ class GeneralInfoViewModel : ViewModel() {
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val _generalStats = MutableLiveData<String>()
-    val generalStats: LiveData<String>
+    private val _generalStats = MutableLiveData<GeneralStats>()
+    val generalStats: LiveData<GeneralStats>
         get() = _generalStats
 
     init {
@@ -29,11 +30,11 @@ class GeneralInfoViewModel : ViewModel() {
     }
 
     private fun getGeneralInfo() {
-        _generalStats.value = "Nothing downloaded yet" //GeneralStats("1", "2", "3", "4", "5")
+        _generalStats.value = GeneralStats()
         coroutineScope.launch {
-            var getGeneralInfoDeferred = Network.covid19Service.getGeneralStats()
+            var getGeneralInfoDeferred = CovidApi.service.getGeneralStats()
             var generalInfoResult = getGeneralInfoDeferred.await()
-            _generalStats.value = generalInfoResult
+            _generalStats.value = generalInfoResult.asDomainModel()
         }
     }
 
