@@ -5,9 +5,9 @@ package com.example.android.covid19tracker.domain
  */
 
 data class GeneralStats(
-    val totalCases: Long,
-    val infectedCases: Long,
-    val recoveryCases: Long,
-    val deathCases: Long,
+    val totalCases: String,
+    val infectedCases: String,
+    val recoveryCases: String,
+    val deathCases: String,
     val lastUpdated: String
 )

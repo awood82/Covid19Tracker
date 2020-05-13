@@ -5,15 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.android.covid19tracker.R
+import androidx.lifecycle.ViewModelProviders
+import com.example.android.covid19tracker.databinding.FragmentGeneralInfoBinding
 
 class GeneralInfoFragment : Fragment() {
+
+    private val viewModel: GeneralInfoViewModel by lazy {
+        ViewModelProviders.of(this).get(GeneralInfoViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_general_info, container, false)
+        savedInstanceState: Bundle?) : View? {
+
+        val binding = FragmentGeneralInfoBinding.inflate(inflater)
+
+        binding.setLifecycleOwner(this)
+        binding.viewModel = viewModel
+
+        return binding.root
     }
 }
