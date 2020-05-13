@@ -11,7 +11,7 @@ private val BASE_URL = "https://corona-virus-stats.herokuapp.com"
 
 interface Covid19Service {
     @GET("api/v1/cases/general-stats")
-    fun getGeneralStats(): Deferred<GeneralStats>
+    fun getGeneralStats(): Deferred<String>
 
     //@GET("api/v1/cases/countries-search")
     //fun getCountryStats():
