@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_nav"
     app:startDestination="@id/generalInfoFragment">
 
     <fragment
         android:id="@+id/generalInfoFragment"
         android:name="com.example.android.covid19tracker.screen_general_info.GeneralInfoFragment"
-        android:label="GeneralInfoFragment" />
+        android:label="GeneralInfoFragment"
+        tools:layout="@layout/fragment_general_info"/>
 
     <fragment
         android:id="@+id/regionFragment"
         android:name="com.example.android.covid19tracker.screen_region.RegionFragment"
-        android:label="RegionFragment" />
+        android:label="RegionFragment"
+        tools:layout="@layout/fragment_region"/>
 
     <fragment
         android:id="@+id/mapFragment"
