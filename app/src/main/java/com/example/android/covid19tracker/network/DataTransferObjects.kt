@@ -51,6 +51,7 @@ data class NetworkRegionalCountries(
 fun NetworkRegionalContainer.asDomainModel(): List<RegionalStats> {
     return data.rows.map {
         RegionalStats(
+            name = it.country,
             flagUrl = it.flag,
             totalCases = it.total_cases,
             infectedCases = it.active_cases,
