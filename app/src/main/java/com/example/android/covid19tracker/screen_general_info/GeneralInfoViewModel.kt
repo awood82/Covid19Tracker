@@ -32,7 +32,7 @@ class GeneralInfoViewModel : ViewModel() {
     private fun getGeneralInfo() {
         _generalStats.value = GeneralStats()
         coroutineScope.launch {
-            var getGeneralInfoDeferred = CovidApi.service.getGeneralStats()
+            var getGeneralInfoDeferred = CovidApi.service.getGlobalStats()
             var generalInfoResult = getGeneralInfoDeferred.await()
             _generalStats.value = generalInfoResult.asDomainModel()
         }
