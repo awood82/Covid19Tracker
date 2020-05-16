@@ -24,8 +24,7 @@ private val retrofit = Retrofit.Builder()
 interface Covid19Service {
     @GET("api/v1/cases/general-stats")
     fun getGlobalStats(): Deferred<NetworkGlobalContainer>
-//https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?order=total_cases&how=desc
-    //@Query("sort") String order
+
     @GET("api/v1/cases/countries-search")
     fun getRegionalStats(
         @Query("order") orderByField: String,

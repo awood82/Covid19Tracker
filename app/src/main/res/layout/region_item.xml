@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -16,65 +16,52 @@
 
         <ImageView
             android:id="@+id/flag_image"
-            android:layout_width="105dp"
-            android:layout_height="92dp"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:imageUrl="@{region.flagUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/checkbox_off_background" />
 
         <TextView
             android:id="@+id/country_text"
-            android:layout_width="wrap_content"
+            style="@style/TitleText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
             android:text="@{region.name}"
-            app:layout_constraintBottom_toTopOf="@+id/updated_text"
-            app:layout_constraintEnd_toStartOf="@+id/cases_text"
-            app:layout_constraintStart_toEndOf="@+id/flag_image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="USA"/>
-
-        <TextView
-            android:id="@+id/updated_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@{region.lastUpdate}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cases_text"
             app:layout_constraintStart_toEndOf="@+id/flag_image"
-            app:layout_constraintTop_toBottomOf="@+id/country_text"
-            tools:text="Last Tuesday"/>
+            app:layout_constraintTop_toTopOf="@+id/flag_image"
+            tools:text="USA" />
 
         <TextView
             android:id="@+id/cases_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@{region.totalCases}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/updated_text"
+            android:textColor="@color/colorTotalCases"
+            style="@style/NumberText"
+            app:layout_constraintBottom_toBottomOf="@+id/country_text"
             app:layout_constraintEnd_toStartOf="@+id/dropdown_image"
-            tools:layout_editor_absoluteX="208dp"
-            tools:text="9,999,999"/>
+            app:layout_constraintTop_toTopOf="@+id/country_text"
+            tools:text="9,999,999" />
 
         <ImageView
             android:id="@+id/dropdown_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/cases_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cases_text"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cases_text"
             app:srcCompat="@android:drawable/ic_menu_more" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,4 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorTotalCases">@android:color/holo_blue_bright</color>
+    <color name="colorInfected">@android:color/holo_red_dark</color>
+    <color name="colorRecovered">@android:color/holo_green_light</color>
+    <color name="coloredDead">@android:color/darker_gray</color>
 </resources>

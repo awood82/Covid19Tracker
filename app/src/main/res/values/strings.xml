@@ -3,8 +3,8 @@
     <string name="menu_title_total_stats">Total Stats</string>
     <string name="menu_title_region_stats">Region Stats</string>
     <string name="menu_title_map">COVID Map</string>
-    <string name="total_confirmed_cases">Total Confirmed Cases: %s</string>
-    <string name="currently_infected">Currently Infected: %s</string>
-    <string name="recovered">Recovered: %s</string>
-    <string name="deaths">Deaths: %s</string>
+    <string name="total_confirmed_cases">Total Confirmed Cases</string>
+    <string name="currently_infected">Currently Infected</string>
+    <string name="recovered">Recovered</string>
+    <string name="deaths">Deaths</string>
 </resources>

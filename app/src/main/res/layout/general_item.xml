@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="general"
+            type="com.example.android.covid19tracker.domain.GeneralItemCard" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/icon_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:tint="@{general.color}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@{general.drawable}"
+            tools:srcCompat="@drawable/ic_favorite_24px" />
+
+        <TextView
+            android:id="@+id/type_text"
+            style="@style/TitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="@{general.type}"
+            app:layout_constraintBottom_toTopOf="@+id/updated_text"
+            app:layout_constraintEnd_toStartOf="@+id/cases_text"
+            app:layout_constraintStart_toEndOf="@+id/icon_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Group Name" />
+
+        <TextView
+            android:id="@+id/cases_text"
+            style="@style/NumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@{general.cases}"
+            android:textColor="@{general.color}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="9,999,999" />
+
+        <TextView
+            android:id="@+id/updated_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{general.lastUpdate}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/type_text"
+            app:layout_constraintStart_toStartOf="@+id/type_text"
+            app:layout_constraintTop_toBottomOf="@+id/type_text"
+            tools:text="Last Wednesday"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

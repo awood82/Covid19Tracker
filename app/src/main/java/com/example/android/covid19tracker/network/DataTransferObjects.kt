@@ -1,5 +1,8 @@
 package com.example.android.covid19tracker.network
 
+import android.content.res.Resources
+import com.example.android.covid19tracker.R
+import com.example.android.covid19tracker.domain.GeneralItemCard
 import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.squareup.moshi.JsonClass
@@ -26,6 +29,47 @@ fun NetworkGlobalContainer.asDomainModel(): GeneralStats {
         deathCases = data.death_cases,
         lastUpdate = data.last_update
     )
+}
+
+fun NetworkGlobalContainer.asDomainModelCards(res: Resources): List<GeneralItemCard> {
+    val cards = ArrayList<GeneralItemCard>()
+    cards.add(
+        GeneralItemCard(
+            drawable = R.drawable.ic_description_24px,
+            type = res.getString(R.string.total_confirmed_cases),
+            cases = data.total_cases,
+            color = res.getColor(R.color.colorTotalCases),
+            lastUpdate = data.last_update
+        )
+    )
+    cards.add(
+        GeneralItemCard(
+            drawable = R.drawable.ic_report_problem_24px,
+            type = res.getString(R.string.currently_infected),
+            cases = data.currently_infected,
+            color = res.getColor(R.color.colorInfected),
+            lastUpdate = data.last_update
+        )
+    )
+    cards.add(
+        GeneralItemCard(
+            drawable = R.drawable.ic_favorite_24px,
+            type = res.getString(R.string.recovered),
+            cases = data.recovery_cases,
+            color = res.getColor(R.color.colorRecovered),
+            lastUpdate = data.last_update
+        )
+    )
+    cards.add(
+        GeneralItemCard(
+            drawable = R.drawable.ic_face_24px,
+            type = res.getString(R.string.deaths),
+            cases = data.death_cases,
+            color = res.getColor(R.color.coloredDead),
+            lastUpdate = data.last_update
+        )
+    )
+    return cards
 }
 
 @JsonClass(generateAdapter = true)
