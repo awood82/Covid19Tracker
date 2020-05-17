@@ -9,13 +9,13 @@
     </style>
 
     <style name="TitleText" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:color">@android:color/black</item>
     </style>
 
     <style name="NumberText" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
