@@ -8,11 +8,15 @@
         <variable
             name="region"
             type="com.example.android.covid19tracker.domain.RegionalStats" />
+        <variable
+            name="clickListener"
+            type="com.example.android.covid19tracker.screen_region.RegionClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(region)}">
 
         <ImageView
             android:id="@+id/flag_image"

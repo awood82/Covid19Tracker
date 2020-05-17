@@ -37,4 +37,8 @@ class RegionViewModel : ViewModel() {
             _regionalStats.value = regionalInfoResult.asDomainModel()
         }
     }
+
+    fun displayRegionalStats(region: RegionalStats) {
+        //Toast.makeText()
+    }
 }

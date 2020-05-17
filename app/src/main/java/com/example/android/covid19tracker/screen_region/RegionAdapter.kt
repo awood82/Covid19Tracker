@@ -9,7 +9,7 @@ import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.RegionItemBinding
 import com.example.android.covid19tracker.domain.RegionalStats
 
-class RegionAdapter : RecyclerView.Adapter<RegionalStatsViewHolder>() {
+class RegionAdapter(val click: RegionClickListener) : RecyclerView.Adapter<RegionalStatsViewHolder>() {
 
     // List of stats for each country
     var countryStats: List<RegionalStats> = emptyList()
@@ -36,6 +36,7 @@ class RegionAdapter : RecyclerView.Adapter<RegionalStatsViewHolder>() {
     override fun onBindViewHolder(holder: RegionalStatsViewHolder, position: Int) {
         holder.viewDataBinding.let {
             it.region = countryStats[position]
+            it.clickListener = click
         }
     }
 }
@@ -48,4 +49,8 @@ class RegionalStatsViewHolder(val viewDataBinding: RegionItemBinding) :
         @LayoutRes
         val LAYOUT = R.layout.region_item
     }
+}
+
+class RegionClickListener(val item: (RegionalStats) -> Unit) {
+    fun onClick(region: RegionalStats) = item(region)
 }
