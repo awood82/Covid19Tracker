@@ -29,6 +29,10 @@ class RegionViewModel : ViewModel() {
         viewModelJob.cancel()
     }
 
+    /**
+     * Downloads COVID-19 stats for all individual countries and sorts them
+     * by the total number of cases, starting with the country with the most cases.
+     */
     private fun getRegionalInfo() {
         coroutineScope.launch {
             var getRegionalInfoDeferred =
@@ -38,6 +42,9 @@ class RegionViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Displays COVID-19 stats about the country that was just clicked.
+     */
     fun displayRegionalStats(region: RegionalStats) {
         //Toast.makeText()
     }

@@ -20,10 +20,6 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val _generalStats = MutableLiveData<GeneralStats>()
-    val generalStats: LiveData<GeneralStats>
-        get() = _generalStats
-
     private val _generalItemCards = MutableLiveData<List<GeneralItemCard>>()
     val generalItemCards: LiveData<List<GeneralItemCard>>
         get() = _generalItemCards
@@ -38,11 +34,9 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     }
 
     private fun getGeneralItems() {
-        _generalStats.value = GeneralStats()
         coroutineScope.launch {
             var getGeneralInfoDeferred = CovidApi.service.getGlobalStats()
             var generalInfoResult = getGeneralInfoDeferred.await()
-            _generalStats.value = generalInfoResult.asDomainModel()
             _generalItemCards.value = generalInfoResult.asDomainModelCards(app.resources)
         }
     }
