@@ -13,6 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/flag_image"
+            android:layout_width="60dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:imageUrl="@{viewModel.regionalStats.flagUrl}"
+            app:layout_constraintBottom_toTopOf="@+id/confirmed_image"
+            app:layout_constraintEnd_toStartOf="@+id/country_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_face_24px" />
+
+        <TextView
+            android:id="@+id/country_text"
+            style="@style/TitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.regionalStats.name}"
+            app:layout_constraintBottom_toBottomOf="@+id/flag_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/flag_image"
+            app:layout_constraintTop_toTopOf="@id/flag_image"
+            tools:text="USA" />
+
         <!-- Total confirmed cases -->
         <ImageView
             android:id="@+id/confirmed_image"
@@ -20,12 +49,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:tint="@color/colorTotalCases"
             app:layout_constraintBottom_toTopOf="@+id/infected_image"
             app:layout_constraintEnd_toStartOf="@+id/confirmed_title_text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/flag_image"
             app:srcCompat="@drawable/ic_description_24px" />
 
         <TextView
@@ -63,6 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:tint="@color/colorInfected"
             app:layout_constraintBottom_toTopOf="@+id/recovered_image"
             app:layout_constraintEnd_toStartOf="@+id/infected_title_text"
@@ -106,6 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:tint="@color/colorRecovered"
             app:layout_constraintBottom_toTopOf="@+id/deaths_image"
             app:layout_constraintEnd_toStartOf="@+id/recovered_title_text"
@@ -148,7 +183,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:tint="@color/coloredDead"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deaths_title_text"

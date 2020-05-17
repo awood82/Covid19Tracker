@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.covid19tracker.databinding.FragmentBottomSheetBinding
 import com.example.android.covid19tracker.domain.RegionalStats
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomSheetFragment : Fragment() {
+class BottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
