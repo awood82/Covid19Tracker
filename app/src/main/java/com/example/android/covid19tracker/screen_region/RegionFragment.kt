@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
@@ -34,9 +35,17 @@ class RegionFragment : Fragment() {
 
         viewModelAdapter = RegionAdapter(RegionClickListener {
             viewModel.displayRegionalStats(it)
-            Toast.makeText(activity, "Clicked " + it.name, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(activity, "Clicked " + it.name, Toast.LENGTH_SHORT).show()
         })
         binding.root.findViewById<RecyclerView>(R.id.region_recycler).adapter = viewModelAdapter
+
+        viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (null != it) {
+                findNavController().navigate(RegionFragmentDirections.actionRegionFragmentToBottomSheetFragment(it))
+                // Prevent multiple navigations in case the user rotates the screen
+                viewModel.displayRegionalStatsComplete()
+            }
+        })
 
         return binding.root
     }

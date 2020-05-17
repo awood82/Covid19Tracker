@@ -40,13 +40,13 @@
             android:layout_marginEnd="16dp"
             android:text="@{region.name}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cases_text"
+            app:layout_constraintEnd_toStartOf="@+id/confirmed_cases_text"
             app:layout_constraintStart_toEndOf="@+id/flag_image"
             app:layout_constraintTop_toTopOf="@+id/flag_image"
             tools:text="USA" />
 
         <TextView
-            android:id="@+id/cases_text"
+            android:id="@+id/confirmed_cases_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -63,9 +63,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cases_text"
+            app:layout_constraintBottom_toBottomOf="@+id/confirmed_cases_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cases_text"
+            app:layout_constraintTop_toTopOf="@+id/confirmed_cases_text"
             app:srcCompat="@android:drawable/ic_menu_more" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

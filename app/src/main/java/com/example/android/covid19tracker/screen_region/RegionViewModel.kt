@@ -20,6 +20,10 @@ class RegionViewModel : ViewModel() {
     val regionalStats: LiveData<List<RegionalStats>>
         get() = _regionalStats
 
+    private val _navigateToBottomSheet = MutableLiveData<RegionalStats>()
+    val navigateToBottomSheet: LiveData<RegionalStats>
+        get() = _navigateToBottomSheet
+
     init {
         getRegionalInfo()
     }
@@ -43,9 +47,13 @@ class RegionViewModel : ViewModel() {
     }
 
     /**
-     * Displays COVID-19 stats about the country that was just clicked.
+     * Requests another screen to display COVID-19 stats about the country that was just clicked.
      */
     fun displayRegionalStats(region: RegionalStats) {
-        //Toast.makeText()
+        _navigateToBottomSheet.value = region
+    }
+
+    fun displayRegionalStatsComplete() {
+        _navigateToBottomSheet.value = null
     }
 }

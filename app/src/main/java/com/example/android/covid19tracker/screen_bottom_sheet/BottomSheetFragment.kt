@@ -20,8 +20,8 @@ class BottomSheetFragment : Fragment() {
 
         binding.setLifecycleOwner(this)
 
-        val regionalStatsThatNeedToBePassedInFromArgsTODO: RegionalStats = (RegionalStats(name="USA", totalCases = "9,999,999"))
-        val viewModelFactory = BottomSheetViewModel.BottomSheetFactory(regionalStatsThatNeedToBePassedInFromArgsTODO)
+        val regionalStats: RegionalStats = BottomSheetFragmentArgs.fromBundle(requireArguments()).regionalStats
+        val viewModelFactory = BottomSheetViewModel.BottomSheetFactory(regionalStats)
         binding.viewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomSheetViewModel::class.java)
 
         return binding.root

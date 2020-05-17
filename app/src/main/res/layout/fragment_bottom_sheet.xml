@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- Total confirmed cases -->
         <ImageView
@@ -48,6 +48,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/colorTotalCases"
+            android:text="@{viewModel.regionalStats.totalCases}"
             app:layout_constraintBottom_toBottomOf="@+id/confirmed_title_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/confirmed_title_text"
@@ -90,6 +91,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/colorInfected"
+            android:text="@{viewModel.regionalStats.infectedCases}"
             app:layout_constraintBottom_toBottomOf="@+id/infected_title_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/infected_title_text"
@@ -132,6 +134,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/colorRecovered"
+            android:text="@{viewModel.regionalStats.recoveryCases}"
             app:layout_constraintBottom_toBottomOf="@+id/recovered_title_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/recovered_title_text"
@@ -174,6 +177,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/coloredDead"
+            android:text="@{viewModel.regionalStats.deathCases}"
             app:layout_constraintBottom_toBottomOf="@+id/deaths_title_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/deaths_title_text"

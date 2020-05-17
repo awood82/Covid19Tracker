@@ -1,6 +1,8 @@
 package com.example.android.covid19tracker.domain
 
 import android.graphics.Color
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 data class GeneralStats(
     val totalCases: String = "0",
@@ -18,6 +20,7 @@ data class GeneralItemCard(
     val color: Int
 )
 
+@Parcelize
 data class RegionalStats(
     val name: String = "",
     val flagUrl: String = "",
@@ -25,5 +28,4 @@ data class RegionalStats(
     val infectedCases: String = "0",
     val recoveryCases: String = "0",
     val deathCases: String = "0",
-    val lastUpdate: String = "Never"
-)
+    val lastUpdate: String = "Never") : Parcelable
