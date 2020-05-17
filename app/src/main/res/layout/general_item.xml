@@ -33,7 +33,7 @@
                 tools:srcCompat="@drawable/ic_favorite_24px" />
 
             <TextView
-                android:id="@+id/type_text"
+                android:id="@+id/confirmed_title_text"
                 style="@style/TitleText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -43,13 +43,13 @@
                 android:layout_marginBottom="4dp"
                 android:text="@{general.type}"
                 app:layout_constraintBottom_toTopOf="@+id/updated_text"
-                app:layout_constraintEnd_toStartOf="@+id/cases_text"
+                app:layout_constraintEnd_toStartOf="@+id/confirmed_cases_text"
                 app:layout_constraintStart_toEndOf="@+id/icon_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Group Name" />
 
             <TextView
-                android:id="@+id/cases_text"
+                android:id="@+id/confirmed_cases_text"
                 style="@style/NumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,9 +69,9 @@
                 android:layout_marginBottom="16dp"
                 android:text="@{general.lastUpdate}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/type_text"
-                app:layout_constraintStart_toStartOf="@+id/type_text"
-                app:layout_constraintTop_toBottomOf="@+id/type_text"
+                app:layout_constraintEnd_toEndOf="@+id/confirmed_title_text"
+                app:layout_constraintStart_toStartOf="@+id/confirmed_title_text"
+                app:layout_constraintTop_toBottomOf="@+id/confirmed_title_text"
                 tools:text="Last Wednesday"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
