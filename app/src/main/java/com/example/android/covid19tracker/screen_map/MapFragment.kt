@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.android.covid19tracker.R
+import com.example.android.covid19tracker.databinding.FragmentMapBinding
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -16,62 +19,48 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
+    private val viewModel: MapViewModel by lazy {
+        ViewModelProviders.of(this).get(MapViewModel::class.java)
+    }
+
+    lateinit private var googleMap: GoogleMap
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        val binding = FragmentMapBinding.inflate(inflater)
+
+        binding.setLifecycleOwner(this)
+        binding.viewModel = viewModel
+
+        return binding.root //inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        viewModel.regionalStats.observe(viewLifecycleOwner, Observer {
+            // TODO refactor
+            val geocoder = Geocoder(context)
+            for (region in it) {
+                val addressList = geocoder.getFromLocationName(region.name, 1)
+                if (addressList.isNotEmpty()) {
+                    val location = addressList.get(0)
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    googleMap?.addMarker(MarkerOptions().position(latLng))
+                }
+            }
+        })
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        val geocoder = Geocoder(context)
-        val locationSearchStrings = listOf("USA", "Spain", "Italy")
-        for (searchString in locationSearchStrings) {
-            val location = geocoder.getFromLocationName(searchString, 1).get(0)
-            val latLng = LatLng(location.latitude, location.longitude)
-            googleMap?.addMarker(MarkerOptions().position(latLng))
+        if (googleMap != null) {
+            this.googleMap = googleMap
         }
     }
 }
-
-
-/*
-OnMapReadyCallback {
-
-    private lateinit var mMap: GoogleMap
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
-
- */
