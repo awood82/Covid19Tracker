@@ -1,6 +1,5 @@
 package com.example.android.covid19tracker.domain
 
-import android.graphics.Color
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -28,4 +27,6 @@ data class RegionalStats(
     val infectedCases: String = "0",
     val recoveryCases: String = "0",
     val deathCases: String = "0",
-    val lastUpdate: String = "Never") : Parcelable
+    val lastUpdate: String = "Never",
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0) : Parcelable

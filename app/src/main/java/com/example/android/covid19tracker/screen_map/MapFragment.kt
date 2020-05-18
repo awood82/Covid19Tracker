@@ -1,7 +1,5 @@
 package com.example.android.covid19tracker.screen_map
 
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +18,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel: MapViewModel by lazy {
-        ViewModelProviders.of(this).get(MapViewModel::class.java)
+        val activity = requireNotNull(activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        ViewModelProviders.of(this, MapViewModel.Factory(activity.application))
+            .get(MapViewModel::class.java)
     }
 
     lateinit private var googleMap: GoogleMap
@@ -35,7 +37,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
 
-        return binding.root //inflater.inflate(R.layout.fragment_map, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -45,15 +47,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         viewModel.regionalStats.observe(viewLifecycleOwner, Observer {
-            // TODO refactor
-            val geocoder = Geocoder(context)
             for (region in it) {
-                val addressList = geocoder.getFromLocationName(region.name, 1)
-                if (addressList.isNotEmpty()) {
-                    val location = addressList.get(0)
-                    val latLng = LatLng(location.latitude, location.longitude)
-                    googleMap?.addMarker(MarkerOptions().position(latLng))
-                }
+                val latLng = LatLng(region.latitude, region.longitude)
+                googleMap?.addMarker(MarkerOptions().position(latLng).title(region.name))
             }
         })
     }
@@ -61,6 +57,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         if (googleMap != null) {
             this.googleMap = googleMap
+//            this.googleMap.setOnMarkerClickListener {  }
         }
     }
 }

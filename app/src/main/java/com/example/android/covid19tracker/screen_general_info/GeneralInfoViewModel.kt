@@ -42,7 +42,7 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     }
 
     /**
-     * Factory for constructing DevByteViewModel with parameter
+     * Factory for constructing a specific ViewModel with parameter
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
