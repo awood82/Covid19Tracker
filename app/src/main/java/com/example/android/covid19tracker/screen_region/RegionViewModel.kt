@@ -42,7 +42,14 @@ open class RegionViewModel : ViewModel() {
             var getRegionalInfoDeferred =
                 CovidApi.service.getRegionalStats("total_cases", "desc")
             var regionalInfoResult = getRegionalInfoDeferred.await()
-            _regionalStats.value = regionalInfoResult.asDomainModel()
+            var stats = regionalInfoResult.asDomainModel()
+
+            // Assumption: The "World" region is still returned in the list of countries
+            // and it shouldn't be displayed.
+            if (stats.get(0).name == "World") {
+                stats = stats.subList(1, stats.lastIndex + 1)
+            }
+            _regionalStats.value = stats
         }
     }
 

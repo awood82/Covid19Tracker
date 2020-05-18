@@ -36,7 +36,14 @@ class MapViewModel(val app: Application) : ViewModel() {
             var getRegionalInfoDeferred =
                 CovidApi.service.getRegionalStats("total_cases", "desc")
             var regionalInfoResult = getRegionalInfoDeferred.await()
-            val stats = regionalInfoResult.asDomainModel()
+            var stats = regionalInfoResult.asDomainModel()
+
+            // Assumption: The "World" region is still returned in the list of countries
+            // and it shouldn't be displayed.
+            if (stats.get(0).name == "World") {
+                stats = stats.subList(1, stats.lastIndex + 1)
+            }
+
             val geocoder = Geocoder(app)
             for (region in stats) {
                 val addressList = geocoder.getFromLocationName(region.name, 1)
