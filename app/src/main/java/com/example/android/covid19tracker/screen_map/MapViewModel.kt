@@ -23,6 +23,10 @@ class MapViewModel(val app: Application) : ViewModel() {
     val regionalStats: LiveData<List<RegionalStats>>
         get() = _regionalStats
 
+    private val _navigateToBottomSheet = MutableLiveData<RegionalStats>()
+    val navigateToBottomSheet: LiveData<RegionalStats>
+        get() = _navigateToBottomSheet
+
     init {
         getRegionLocations()
     }
@@ -46,6 +50,35 @@ class MapViewModel(val app: Application) : ViewModel() {
             }
             _regionalStats.value = stats
         }
+    }
+
+    /**
+     * Requests another screen to display COVID-19 stats about the country that was just clicked.
+     */
+    fun displayRegionalStats(name: String) {
+        _navigateToBottomSheet.value = findRegionByName(name)
+    }
+
+    fun displayRegionalStatsComplete() {
+        _navigateToBottomSheet.value = null
+    }
+
+    private fun findRegionByName(name: String): RegionalStats? {
+        val regions = _regionalStats.value
+        if (!regions.isNullOrEmpty()) {
+            for (region in regions) {
+                if (region.name == name) {
+                    return region
+                }
+            }
+        }
+        return null
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 
     /**

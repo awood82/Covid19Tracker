@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentMapBinding
 import com.google.android.gms.maps.GoogleMap
@@ -37,6 +38,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
 
+        viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (null != it) {
+                findNavController().navigate(MapFragmentDirections.actionMapFragmentToBottomSheetFragment(it))
+                // Prevent multiple navigations in case the user rotates the screen
+                viewModel.displayRegionalStatsComplete()
+            }
+        })
+
         return binding.root
     }
 
@@ -54,10 +63,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        if (googleMap != null) {
-            this.googleMap = googleMap
-//            this.googleMap.setOnMarkerClickListener {  }
+    override fun onMapReady(map: GoogleMap?) {
+        if (map != null) {
+            googleMap = map
+            googleMap.setOnMarkerClickListener { marker ->
+                if (null != marker) {
+                    viewModel.displayRegionalStats(marker.title)
+                    true
+                }
+                false
+            }
         }
     }
 }
