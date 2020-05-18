@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import com.example.android.covid19tracker.R
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -28,23 +26,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val sfm = requireActivity().supportFragmentManager
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
         val geocoder = Geocoder(context)
-        val locations = mutableListOf<Address>()
-        val italy = geocoder.getFromLocationName("Italy", 1)
-        locations.add(italy[0])
-        locations.add(geocoder.getFromLocationName("USA", 1).get(0))
-        locations.add(geocoder.getFromLocationName("Spain", 1).get(0))
-        locations.add(geocoder.getFromLocationName("Italy", 1).get(0))
-        for (location in locations) {
-            googleMap?.addMarker(MarkerOptions().position(LatLng(location.latitude, location.longitude)))
+        val locationSearchStrings = listOf("USA", "Spain", "Italy")
+        for (searchString in locationSearchStrings) {
+            val location = geocoder.getFromLocationName(searchString, 1).get(0)
+            val latLng = LatLng(location.latitude, location.longitude)
+            googleMap?.addMarker(MarkerOptions().position(latLng))
         }
-        googleMap?.addMarker(MarkerOptions().position(LatLng(-34.0, 151.0)))
     }
 }
 
