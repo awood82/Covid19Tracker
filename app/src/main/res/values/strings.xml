@@ -7,4 +7,5 @@
     <string name="currently_infected">Currently Infected</string>
     <string name="recovered">Recovered</string>
     <string name="deaths">Deaths</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
