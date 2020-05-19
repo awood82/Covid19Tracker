@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.android.covid19tracker.databinding.FragmentBottomSheetBinding
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
@@ -28,6 +28,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         val viewModelFactory = BottomSheetViewModel.BottomSheetFactory(regionalStats)
         binding.viewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomSheetViewModel::class.java)
 
+        // Setup the pie chart programmatically
         val listPieEntry = listOf(
             PieEntry(regionalStats.infectedCases.replace(",", "").toFloat()),
             PieEntry(regionalStats.recoveryCases.replace(",", "").toFloat()),
@@ -39,21 +40,17 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             binding.recoveredCasesText.textColors.defaultColor,
             binding.deathCasesText.textColors.defaultColor)
         with (binding.pieChart) {
-            setUsePercentValues(true)
             data = PieData(set)
+            data.setValueTextSize(16.0f)
+            data.setValueFormatter(PercentFormatter(this))
+            setUsePercentValues(true)
+            // Hide the items at the bottom of the chart that are not useful
+            legend.isEnabled = false
+            description.text = ""
+            // Trigger redraw
             invalidate()
         }
-/*
-        List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(18.5f, "Green"));
-        entries.add(new PieEntry(26.7f, "Yellow"));
-        entries.add(new PieEntry(24.0f, "Red"));
-        entries.add(new PieEntry(30.8f, "Blue"));
-        PieDataSet set = new PieDataSet(entries, "Election Results");
-        PieData data = new PieData(set);
-        pieChart.setData(data);
-        pieChart.invalidate(); // refresh
-*/
+
         return binding.root
     }
 }
