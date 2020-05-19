@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.example.android.covid19tracker.network.CovidApi
 import com.example.android.covid19tracker.network.asDomainModel
+import com.example.android.covid19tracker.util.LoadingStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 open class RegionViewModel : ViewModel() {
 
@@ -19,6 +21,10 @@ open class RegionViewModel : ViewModel() {
     private val _regionalStats = MutableLiveData<List<RegionalStats>>()
     val regionalStats: LiveData<List<RegionalStats>>
         get() = _regionalStats
+
+    private val _loadingStatus = MutableLiveData<LoadingStatus>()
+    val loadingStatus: LiveData<LoadingStatus>
+        get() = _loadingStatus
 
     private val _navigateToBottomSheet = MutableLiveData<RegionalStats>()
     val navigateToBottomSheet: LiveData<RegionalStats>
@@ -38,18 +44,25 @@ open class RegionViewModel : ViewModel() {
      * by the total number of cases, starting with the country with the most cases.
      */
     private fun getRegionalInfo() {
+        _loadingStatus.value = LoadingStatus.LOADING
         coroutineScope.launch {
-            var getRegionalInfoDeferred =
-                CovidApi.service.getRegionalStats("total_cases", "desc")
-            var regionalInfoResult = getRegionalInfoDeferred.await()
-            var stats = regionalInfoResult.asDomainModel()
+            try {
+                var getRegionalInfoDeferred =
+                    CovidApi.service.getRegionalStats("total_cases", "desc")
+                var regionalInfoResult = getRegionalInfoDeferred.await()
+                var stats = regionalInfoResult.asDomainModel()
 
-            // Assumption: The "World" region is still returned in the list of countries
-            // and it shouldn't be displayed.
-            if (stats.get(0).name == "World") {
-                stats = stats.subList(1, stats.lastIndex + 1)
+                // Assumption: The "World" region is still returned in the list of countries
+                // and it shouldn't be displayed.
+                if (stats.get(0).name == "World") {
+                    stats = stats.subList(1, stats.lastIndex + 1)
+                }
+                _regionalStats.value = stats
+                _loadingStatus.value = LoadingStatus.DONE
+            } catch (e: Exception) {
+                _regionalStats.value = ArrayList()
+                _loadingStatus.value = LoadingStatus.ERROR
             }
-            _regionalStats.value = stats
         }
     }
 

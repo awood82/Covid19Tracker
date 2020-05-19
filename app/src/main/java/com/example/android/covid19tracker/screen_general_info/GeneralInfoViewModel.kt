@@ -29,9 +29,9 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     val generalItemCards: LiveData<List<GeneralItemCard>>
         get() = _generalItemCards
 
-    private val _generalLoadingStatus = MutableLiveData<LoadingStatus>()
-    val generalLoadingStatus: LiveData<LoadingStatus>
-        get() = _generalLoadingStatus
+    private val _loadingStatus = MutableLiveData<LoadingStatus>()
+    val loadingStatus: LiveData<LoadingStatus>
+        get() = _loadingStatus
 
     init {
         getGeneralItems()
@@ -43,16 +43,16 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     }
 
     private fun getGeneralItems() {
-        _generalLoadingStatus.value = LoadingStatus.LOADING
+        _loadingStatus.value = LoadingStatus.LOADING
         coroutineScope.launch {
             try {
                 var getGeneralInfoDeferred = CovidApi.service.getGlobalStats()
                 var generalInfoResult = getGeneralInfoDeferred.await()
                 _generalStats.value = generalInfoResult.asDomainModel()
                 _generalItemCards.value = generalInfoResult.asDomainModelCards(app.resources)
-                _generalLoadingStatus.value = LoadingStatus.DONE
+                _loadingStatus.value = LoadingStatus.DONE
             } catch (e: Exception) {
-                _generalLoadingStatus.value = LoadingStatus.ERROR
+                _loadingStatus.value = LoadingStatus.ERROR
                 _generalStats.value = GeneralStats()
                 _generalItemCards.value = ArrayList()
             }

@@ -19,7 +19,7 @@
             android:id="@+id/loading_status_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:loadingStatus="@{viewModel.generalLoadingStatus}"/>
+            app:loadingStatus="@{viewModel.loadingStatus}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/general_recycler"
