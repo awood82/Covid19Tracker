@@ -3,7 +3,6 @@ package com.example.android.covid19tracker.network
 import android.content.res.Resources
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.domain.GeneralItemCard
-import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.squareup.moshi.JsonClass
 
@@ -55,7 +54,7 @@ fun NetworkGlobalContainer.asDomainModelCards(res: Resources): List<GeneralItemC
             drawable = R.drawable.ic_face_24px,
             type = res.getString(R.string.deaths),
             cases = data.death_cases,
-            color = res.getColor(R.color.coloredDead),
+            color = res.getColor(R.color.colorDead),
             lastUpdate = data.last_update
         )
     )

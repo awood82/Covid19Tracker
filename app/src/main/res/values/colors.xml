@@ -7,5 +7,5 @@
     <color name="colorTotalCases">@android:color/holo_blue_bright</color>
     <color name="colorInfected">@android:color/holo_red_dark</color>
     <color name="colorRecovered">@android:color/holo_green_light</color>
-    <color name="coloredDead">@android:color/darker_gray</color>
+    <color name="colorDead">@android:color/darker_gray</color>
 </resources>
