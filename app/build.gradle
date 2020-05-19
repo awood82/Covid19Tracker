@@ -60,6 +60,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
 
+    // Pie Charts
+    implementation "com.github.PhilJay:MPAndroidChart:v$version_pie_chart"
+
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
