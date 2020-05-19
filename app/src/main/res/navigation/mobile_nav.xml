@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.android.covid19tracker.screen_map.MapFragment"
-        android:label="MapFragment" >
+        android:label="@string/menu_title_map" >
         <action
             android:id="@+id/action_mapFragment_to_bottomSheetFragment"
             app:destination="@id/bottomSheetFragment" />

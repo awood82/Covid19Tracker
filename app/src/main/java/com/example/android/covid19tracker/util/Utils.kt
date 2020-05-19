@@ -14,7 +14,11 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 // Convert a number with commas to float
 // e.g. "1,234,567" => 1234567.0
 fun String.toFloatEx(): Float {
-    return this.replace(",", "").toFloat()
+    try {
+        return this.replace(",", "").toFloat()
+    } catch (e: Exception) {
+        return 0f
+    }
 }
 
 // Setup a pie chart programmatically

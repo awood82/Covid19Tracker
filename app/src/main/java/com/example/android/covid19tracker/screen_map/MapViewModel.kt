@@ -1,7 +1,9 @@
 package com.example.android.covid19tracker.screen_map
 
 import android.app.Application
+import android.graphics.Region
 import android.location.Geocoder
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.example.android.covid19tracker.network.CovidApi
 import com.example.android.covid19tracker.network.asDomainModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.io.IOException
 
 class MapViewModel(val app: Application) : ViewModel() {
 
@@ -44,18 +44,45 @@ class MapViewModel(val app: Application) : ViewModel() {
                 stats = stats.subList(1, stats.lastIndex + 1)
             }
 
+            getLocationMarkers(stats)
+/*
             val geocoder = Geocoder(app)
             for (region in stats) {
-                val addressList = geocoder.getFromLocationName(region.name, 1)
-                if (addressList.isNotEmpty()) {
-                    val location = addressList.get(0)
-                    with(region) {
-                        latitude = location.latitude
-                        longitude = location.longitude
+                try {
+                    val addressList = geocoder.getFromLocationName(region.name, 1)
+                    if (addressList.isNotEmpty()) {
+                        val location = addressList.get(0)
+                        with(region) {
+                            latitude = location.latitude
+                            longitude = location.longitude
+                        }
                     }
+                } catch (e: IOException) {
+                    Log.e("Geocoder error", e.message)
                 }
             }
+ */
             _regionalStats.value = stats
+        }
+    }
+
+    suspend private fun getLocationMarkers(stats: List<RegionalStats>) {
+        withContext(Dispatchers.IO) {
+            val geocoder = Geocoder(app)
+            for (region in stats) {
+                try {
+                    val addressList = geocoder.getFromLocationName(region.name, 1)
+                    if (addressList.isNotEmpty()) {
+                        val location = addressList.get(0)
+                        with(region) {
+                            latitude = location.latitude
+                            longitude = location.longitude
+                        }
+                    }
+                } catch (e: IOException) {
+                    Log.e("Geocoder error", e.message)
+                }
+            }
         }
     }
 
