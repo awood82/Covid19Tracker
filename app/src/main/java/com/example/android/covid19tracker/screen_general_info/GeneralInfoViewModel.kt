@@ -10,6 +10,7 @@ import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.network.CovidApi
 import com.example.android.covid19tracker.network.asDomainModel
 import com.example.android.covid19tracker.network.asDomainModelCards
+import com.example.android.covid19tracker.util.LoadingStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,6 +29,10 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     val generalItemCards: LiveData<List<GeneralItemCard>>
         get() = _generalItemCards
 
+    private val _generalLoadingStatus = MutableLiveData<LoadingStatus>()
+    val generalLoadingStatus: LiveData<LoadingStatus>
+        get() = _generalLoadingStatus
+
     init {
         getGeneralItems()
     }
@@ -38,11 +43,19 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     }
 
     private fun getGeneralItems() {
+        _generalLoadingStatus.value = LoadingStatus.LOADING
         coroutineScope.launch {
-            var getGeneralInfoDeferred = CovidApi.service.getGlobalStats()
-            var generalInfoResult = getGeneralInfoDeferred.await()
-            _generalStats.value = generalInfoResult.asDomainModel()
-            _generalItemCards.value = generalInfoResult.asDomainModelCards(app.resources)
+            try {
+                var getGeneralInfoDeferred = CovidApi.service.getGlobalStats()
+                var generalInfoResult = getGeneralInfoDeferred.await()
+                _generalStats.value = generalInfoResult.asDomainModel()
+                _generalItemCards.value = generalInfoResult.asDomainModelCards(app.resources)
+                _generalLoadingStatus.value = LoadingStatus.DONE
+            } catch (e: Exception) {
+                _generalLoadingStatus.value = LoadingStatus.ERROR
+                _generalStats.value = GeneralStats()
+                _generalItemCards.value = ArrayList()
+            }
         }
     }
 

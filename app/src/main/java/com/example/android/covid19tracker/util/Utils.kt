@@ -11,6 +11,8 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 
+enum class LoadingStatus { LOADING, ERROR, DONE }
+
 // Convert a number with commas to float
 // e.g. "1,234,567" => 1234567.0
 fun String.toFloatEx(): Float {

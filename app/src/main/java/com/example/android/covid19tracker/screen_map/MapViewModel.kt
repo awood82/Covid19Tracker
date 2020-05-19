@@ -1,7 +1,6 @@
 package com.example.android.covid19tracker.screen_map
 
 import android.app.Application
-import android.graphics.Region
 import android.location.Geocoder
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -45,28 +44,11 @@ class MapViewModel(val app: Application) : ViewModel() {
             }
 
             getLocationMarkers(stats)
-/*
-            val geocoder = Geocoder(app)
-            for (region in stats) {
-                try {
-                    val addressList = geocoder.getFromLocationName(region.name, 1)
-                    if (addressList.isNotEmpty()) {
-                        val location = addressList.get(0)
-                        with(region) {
-                            latitude = location.latitude
-                            longitude = location.longitude
-                        }
-                    }
-                } catch (e: IOException) {
-                    Log.e("Geocoder error", e.message)
-                }
-            }
- */
             _regionalStats.value = stats
         }
     }
 
-    suspend private fun getLocationMarkers(stats: List<RegionalStats>) {
+    private suspend fun getLocationMarkers(stats: List<RegionalStats>) {
         withContext(Dispatchers.IO) {
             val geocoder = Geocoder(app)
             for (region in stats) {
@@ -74,7 +56,7 @@ class MapViewModel(val app: Application) : ViewModel() {
                     val addressList = geocoder.getFromLocationName(region.name, 1)
                     if (addressList.isNotEmpty()) {
                         val location = addressList.get(0)
-                        with(region) {
+                        with (region) {
                             latitude = location.latitude
                             longitude = location.longitude
                         }
