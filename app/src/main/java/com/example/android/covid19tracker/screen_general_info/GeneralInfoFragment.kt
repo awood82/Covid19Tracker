@@ -46,8 +46,8 @@ class GeneralInfoFragment : Fragment() {
         viewModel.generalStats.observe(viewLifecycleOwner, Observer { stats ->
             val pieChart = requireView().findViewById<PieChart>(R.id.pie_chart)
             setupPieChart(stats, pieChart, resources)
-            pieChart.description.text = "As of " + stats.lastUpdate
-            pieChart.description.textSize = 12.0f
+            pieChart.description.text = resources.getString(R.string.last_update, stats.lastUpdate)
+            pieChart.description.textSize = resources.getInteger(R.integer.piechart_text_size).toFloat()
         })
         viewModel.generalItemCards.observe(viewLifecycleOwner, Observer { info ->
             info?.apply {
