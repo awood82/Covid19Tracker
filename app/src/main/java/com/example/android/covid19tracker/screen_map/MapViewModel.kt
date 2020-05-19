@@ -32,19 +32,23 @@ class MapViewModel(val app: Application) : ViewModel() {
 
     private fun getRegionLocations() {
         coroutineScope.launch {
-            var getRegionalInfoDeferred =
-                CovidApi.service.getRegionalStats("total_cases", "desc")
-            var regionalInfoResult = getRegionalInfoDeferred.await()
-            var stats = regionalInfoResult.asDomainModel()
+            try {
+                var getRegionalInfoDeferred =
+                    CovidApi.service.getRegionalStats("total_cases", "desc")
+                var regionalInfoResult = getRegionalInfoDeferred.await()
+                var stats = regionalInfoResult.asDomainModel()
 
-            // Assumption: The "World" region is still returned in the list of countries
-            // and it shouldn't be displayed.
-            if (stats.get(0).name == "World") {
-                stats = stats.subList(1, stats.lastIndex + 1)
+                // Assumption: The "World" region is still returned in the list of countries
+                // and it shouldn't be displayed.
+                if (stats.get(0).name == "World") {
+                    stats = stats.subList(1, stats.lastIndex + 1)
+                }
+
+                getLocationMarkers(stats)
+                _regionalStats.value = stats
+            } catch (e: Exception) {
+                _regionalStats.value = ArrayList()
             }
-
-            getLocationMarkers(stats)
-            _regionalStats.value = stats
         }
     }
 
