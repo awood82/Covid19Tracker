@@ -1,8 +1,10 @@
 package com.example.android.covid19tracker.network
 
 import android.content.res.Resources
+import androidx.lifecycle.Transformations.map
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.domain.GeneralItemCard
+import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.squareup.moshi.JsonClass
 
@@ -19,6 +21,16 @@ data class NetworkGeneralStats(
 data class NetworkGlobalContainer(
     val data: NetworkGeneralStats
 )
+
+fun NetworkGlobalContainer.asDomainModel(): GeneralStats {
+    return GeneralStats(
+        totalCases = data.total_cases,
+        infectedCases = data.currently_infected,
+        recoveryCases = data.recovery_cases,
+        deathCases = data.death_cases,
+        lastUpdate = data.last_update
+    )
+}
 
 fun NetworkGlobalContainer.asDomainModelCards(res: Resources): List<GeneralItemCard> {
     val cards = ArrayList<GeneralItemCard>()

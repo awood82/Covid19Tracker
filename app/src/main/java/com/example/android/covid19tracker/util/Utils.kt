@@ -3,6 +3,7 @@ package com.example.android.covid19tracker.util
 import android.content.res.Resources
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentBottomSheetBinding
+import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -17,12 +18,21 @@ fun String.toFloatEx(): Float {
 }
 
 // Setup a pie chart programmatically
+fun setupPieChart(stats: GeneralStats, pieChart: PieChart, resources: Resources) {
+    setupPieChart(stats.infectedCases, stats.recoveryCases, stats.deathCases, pieChart, resources)
+}
+
+// Setup a pie chart programmatically
 fun setupPieChart(stats: RegionalStats, pieChart: PieChart, resources: Resources) {
+    setupPieChart(stats.infectedCases, stats.recoveryCases, stats.deathCases, pieChart, resources)
+}
+
+private fun setupPieChart(infected: String, recovered: String, dead: String, pieChart: PieChart, resources: Resources) {
     val set = PieDataSet(
         listOf(
-            PieEntry(stats.infectedCases.toFloatEx()),
-            PieEntry(stats.recoveryCases.toFloatEx()),
-            PieEntry(stats.deathCases.toFloatEx())
+            PieEntry(infected.toFloatEx()),
+            PieEntry(recovered.toFloatEx()),
+            PieEntry(dead.toFloatEx())
         ), ""
     )
     set.colors = listOf(
