@@ -28,13 +28,18 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         val viewModelFactory = BottomSheetViewModel.BottomSheetFactory(regionalStats)
         binding.viewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomSheetViewModel::class.java)
 
-        // Setup the pie chart programmatically
-        val listPieEntry = listOf(
-            PieEntry(regionalStats.infectedCases.replace(",", "").toFloat()),
-            PieEntry(regionalStats.recoveryCases.replace(",", "").toFloat()),
-            PieEntry(regionalStats.deathCases.replace(",", "").toFloat())
-        )
-        val set = PieDataSet(listPieEntry, "")
+        setupPieChart(regionalStats, binding)
+
+        return binding.root
+    }
+
+    // Setup the pie chart programmatically
+    private fun setupPieChart(stats: RegionalStats, binding: FragmentBottomSheetBinding) {
+        val set = PieDataSet(listOf(
+            PieEntry(stats.infectedCases.toFloatEx()),
+            PieEntry(stats.recoveryCases.toFloatEx()),
+            PieEntry(stats.deathCases.toFloatEx())
+        ), "")
         set.colors = listOf(
             binding.infectedCasesText.textColors.defaultColor,
             binding.recoveredCasesText.textColors.defaultColor,
@@ -42,6 +47,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         with (binding.pieChart) {
             data = PieData(set)
             data.setValueTextSize(16.0f)
+            // NOTE: If you don't pass in the 'this' parameter, the '%' signs will be drawn
             data.setValueFormatter(PercentFormatter(this))
             setUsePercentValues(true)
             // Hide the items at the bottom of the chart that are not useful
@@ -50,7 +56,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             // Trigger redraw
             invalidate()
         }
+    }
 
-        return binding.root
+    // Convert a number with commas to float
+    // e.g. "1,234,567" => 1234567.0
+    fun String.toFloatEx() : Float {
+        return this.replace(",", "").toFloat()
     }
 }
