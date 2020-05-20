@@ -5,10 +5,15 @@
     <string name="menu_title_region_stats">Region Stats</string>
     <string name="menu_title_map">COVID Map</string>
 
+    <string name="share_menu_item">Share</string>
+    <string name="about_menu_item">About</string>
+
     <string name="total_confirmed_cases">Total Confirmed Cases</string>
     <string name="currently_infected">Currently Infected</string>
     <string name="recovered">Recovered</string>
     <string name="deaths">Deaths</string>
 
     <string name="last_update">As of %s</string>
+    <string name="error">Error: %s</string>
 </resources>
+

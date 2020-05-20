@@ -28,8 +28,9 @@ class RegionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?) : View? {
 
-        val binding = FragmentRegionBinding.inflate(inflater)
+        setHasOptionsMenu(true)
 
+        val binding = FragmentRegionBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
 

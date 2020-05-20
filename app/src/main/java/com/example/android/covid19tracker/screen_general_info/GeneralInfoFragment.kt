@@ -1,16 +1,20 @@
 package com.example.android.covid19tracker.screen_general_info
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentGeneralBinding
-import com.example.android.covid19tracker.util.setupPieChart
+import com.example.android.covid19tracker.util.*
 import com.github.mikephil.charting.charts.PieChart
 
 class GeneralInfoFragment : Fragment() {
@@ -29,6 +33,8 @@ class GeneralInfoFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?) : View? {
+
+        setHasOptionsMenu(true)
 
         val binding = FragmentGeneralBinding.inflate(inflater)
 
@@ -54,5 +60,33 @@ class GeneralInfoFragment : Fragment() {
                 viewModelAdapter?.infoStats = info
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.overflow_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> shareScreenshot()
+            R.id.about -> {
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun shareScreenshot() {
+        val bitmap = ScreenshotUtil.takeScreenshot(requireView().rootView)
+        val uri = ScreenshotUtil.saveScreenshot(bitmap, requireActivity())
+        startActivity(getShareIntent(uri))
+    }
+
+    private fun getShareIntent(uri: Uri) : Intent {
+        return ShareCompat.IntentBuilder.from(requireActivity())
+            .setStream(uri)
+            .setType("image/jpeg")
+            .intent
     }
 }

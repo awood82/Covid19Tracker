@@ -1,8 +1,15 @@
 package com.example.android.covid19tracker.util
 
+import android.app.Activity
+import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.net.Uri
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.core.content.FileProvider
 import com.example.android.covid19tracker.R
-import com.example.android.covid19tracker.databinding.FragmentBottomSheetBinding
 import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.github.mikephil.charting.charts.PieChart
@@ -10,6 +17,8 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import java.io.FileOutputStream
+
 
 enum class LoadingStatus { LOADING, ERROR, DONE }
 

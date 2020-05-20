@@ -33,8 +33,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMapBinding.inflate(inflater)
 
+        setHasOptionsMenu(true)
+
+        val binding = FragmentMapBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
 
