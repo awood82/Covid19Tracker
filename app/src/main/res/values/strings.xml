@@ -4,6 +4,7 @@
     <string name="menu_title_total_stats">Total Stats</string>
     <string name="menu_title_region_stats">Region Stats</string>
     <string name="menu_title_map">COVID Map</string>
+    <string name="menu_title_about">About</string>
 
     <string name="share_menu_item">Share</string>
     <string name="about_menu_item">About</string>
@@ -15,5 +16,13 @@
 
     <string name="last_update">As of %s</string>
     <string name="error">Error: %s</string>
+
+    <string name="about">
+\nCoronavirus COVID-19 Tracker
+\n\nBy Andrew Wood
+\n\nThis project demonstrates an Android app that uses Kotlin, MVVM, data binding, Retrofit, Glide, navigation layouts, bottom sheet, overflow menu, Bitmap sharing, Google Maps, and using a 3rd-party library for pie charts.
+\n\nThank you to Google for providing the excellent "Developing Android Apps with Kotlin" course for free on Udacity.
+\n\nThank you to Phil Jay for his MPAndroidChart library (licensed under Apache 2.0).
+    </string>
 </resources>
 

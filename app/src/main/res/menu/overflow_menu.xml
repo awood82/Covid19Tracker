@@ -6,7 +6,7 @@
         android:icon="@android:drawable/ic_menu_share"
         android:title="@string/share_menu_item" />
     <item
-        android:id="@+id/about"
+        android:id="@+id/aboutFragment"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="@string/about_menu_item" />
 </menu>

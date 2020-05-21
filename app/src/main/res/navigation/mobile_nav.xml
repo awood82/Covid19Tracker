@@ -46,4 +46,8 @@
             android:name="regionalStats"
             app:argType="com.example.android.covid19tracker.domain.RegionalStats" />
     </dialog>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.android.covid19tracker.screen_about.AboutFragment"
+        android:label="@string/menu_title_about" />
 </navigation>

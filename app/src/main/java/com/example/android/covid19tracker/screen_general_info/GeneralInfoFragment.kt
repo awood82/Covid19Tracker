@@ -1,9 +1,6 @@
 package com.example.android.covid19tracker.screen_general_info
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -11,6 +8,8 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentGeneralBinding
@@ -70,8 +69,7 @@ class GeneralInfoFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.share -> shareScreenshot()
-            R.id.about -> {
-            }
+            R.id.aboutFragment -> NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
             else -> super.onOptionsItemSelected(item)
         }
         return true
