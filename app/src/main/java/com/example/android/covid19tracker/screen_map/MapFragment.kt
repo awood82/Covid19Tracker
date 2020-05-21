@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentMapBinding
+import com.example.android.covid19tracker.util.RootFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : RootFragment(), OnMapReadyCallback {
 
     private val viewModel: MapViewModel by lazy {
         val activity = requireNotNull(activity) {
@@ -34,6 +34,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
+        // NOTE: onCreateOptionsMenu and onOptionsItemSelected are implemented by the
+        // parent RootFragment because all Fragments currently use this same code.
         setHasOptionsMenu(true)
 
         val binding = FragmentMapBinding.inflate(inflater)

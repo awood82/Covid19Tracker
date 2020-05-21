@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentRegionBinding
-import com.example.android.covid19tracker.domain.RegionalStats
+import com.example.android.covid19tracker.util.RootFragment
 
-class RegionFragment : Fragment() {
+class RegionFragment : RootFragment() {
 
     private val viewModel: RegionViewModel by lazy {
         ViewModelProviders.of(this).get(RegionViewModel::class.java)
@@ -28,6 +25,8 @@ class RegionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?) : View? {
 
+        // NOTE: onCreateOptionsMenu and onOptionsItemSelected are implemented by the
+        // parent RootFragment because all Fragments currently use this same code.
         setHasOptionsMenu(true)
 
         val binding = FragmentRegionBinding.inflate(inflater)

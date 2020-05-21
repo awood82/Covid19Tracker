@@ -1,22 +1,16 @@
 package com.example.android.covid19tracker.screen_general_info
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import androidx.core.app.ShareCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentGeneralBinding
 import com.example.android.covid19tracker.util.*
 import com.github.mikephil.charting.charts.PieChart
 
-class GeneralInfoFragment : Fragment() {
+class GeneralInfoFragment : RootFragment() {
 
     private val viewModel: GeneralInfoViewModel by lazy {
         val activity = requireNotNull(activity) {
@@ -33,6 +27,8 @@ class GeneralInfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?) : View? {
 
+        // NOTE: onCreateOptionsMenu and onOptionsItemSelected are implemented by the
+        // parent RootFragment because all Fragments currently use this same code.
         setHasOptionsMenu(true)
 
         val binding = FragmentGeneralBinding.inflate(inflater)
@@ -59,32 +55,5 @@ class GeneralInfoFragment : Fragment() {
                 viewModelAdapter?.infoStats = info
             }
         })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.overflow_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.share -> shareScreenshot()
-            R.id.aboutFragment -> NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
-            else -> super.onOptionsItemSelected(item)
-        }
-        return true
-    }
-
-    private fun shareScreenshot() {
-        val bitmap = ScreenshotUtil.takeScreenshot(requireView().rootView)
-        val uri = ScreenshotUtil.saveScreenshot(bitmap, requireActivity())
-        startActivity(getShareIntent(uri))
-    }
-
-    private fun getShareIntent(uri: Uri) : Intent {
-        return ShareCompat.IntentBuilder.from(requireActivity())
-            .setStream(uri)
-            .setType("image/jpeg")
-            .intent
     }
 }

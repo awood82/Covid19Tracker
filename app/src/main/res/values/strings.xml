@@ -20,7 +20,8 @@
     <string name="about">
 \nCoronavirus COVID-19 Tracker
 \n\nBy Andrew Wood
-\n\nThis project demonstrates an Android app that uses Kotlin, MVVM, data binding, Retrofit, Glide, navigation layouts, bottom sheet, overflow menu, Bitmap sharing, Google Maps, and using a 3rd-party library for pie charts.
+\n\nThis project demonstrates an Android app that uses Kotlin, MVVM, data binding, Retrofit, Glide, navigation layouts, bottom sheet, overflow menu, Bitmap sharing, Google Maps, and using a 3rd-party library for pie charts. It does not use Room or the Repository pattern yet.
+\n\nThe source code can be viewed at https://bitbucket.org/awood82/covid19tracker/src/master/
 \n\nThank you to Google for providing the excellent "Developing Android Apps with Kotlin" course for free on Udacity.
 \n\nThank you to Phil Jay for his MPAndroidChart library (licensed under Apache 2.0).
     </string>
