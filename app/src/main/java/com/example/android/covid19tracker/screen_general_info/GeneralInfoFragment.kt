@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentGeneralBinding
+import com.example.android.covid19tracker.network.CovidApi
 import com.example.android.covid19tracker.util.*
 import com.github.mikephil.charting.charts.PieChart
 
@@ -16,7 +17,7 @@ class GeneralInfoFragment : RootFragment() {
         val activity = requireNotNull(activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProviders.of(this, GeneralInfoViewModel.Factory(activity.application))
+        ViewModelProviders.of(this, GeneralInfoViewModel.Factory(CovidApi.service))
             .get(GeneralInfoViewModel::class.java)
     }
 

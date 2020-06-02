@@ -13,7 +13,7 @@ data class GeneralStats(
 
 data class GeneralItemCard(
     val drawable: Int,
-    val type: String = "",
+    val type: Int,
     val cases: String = "",
     val lastUpdate: String = "",
     val color: Int

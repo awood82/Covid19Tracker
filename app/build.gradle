@@ -80,4 +80,9 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
 
+    // Testing
+    testImplementation "org.hamcrest:hamcrest-all:$version_hamcrest"
+    testImplementation "androidx.test.ext:junit-ktx:$version_android_x_test_ext_kotlin_runner_version"
+    testImplementation "androidx.test:core-ktx:$version_android_x_test_core"
+    testImplementation "org.robolectric:robolectric:$version_robolectric"
 }

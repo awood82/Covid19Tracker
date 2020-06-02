@@ -32,41 +32,41 @@ fun NetworkGlobalContainer.asDomainModel(): GeneralStats {
     )
 }
 
-fun NetworkGlobalContainer.asDomainModelCards(res: Resources): List<GeneralItemCard> {
+fun NetworkGlobalContainer.asDomainModelCards(): List<GeneralItemCard> {
     val cards = ArrayList<GeneralItemCard>()
     cards.add(
         GeneralItemCard(
             drawable = R.drawable.ic_description_24px,
-            type = res.getString(R.string.total_confirmed_cases),
+            type = R.string.total_confirmed_cases,
             cases = data.total_cases,
-            color = res.getColor(R.color.colorTotalCases),
+            color = R.color.colorTotalCases,
             lastUpdate = data.last_update
         )
     )
     cards.add(
         GeneralItemCard(
             drawable = R.drawable.ic_report_problem_24px,
-            type = res.getString(R.string.currently_infected),
+            type = R.string.currently_infected,
             cases = data.currently_infected,
-            color = res.getColor(R.color.colorInfected),
+            color = R.color.colorInfected,
             lastUpdate = data.last_update
         )
     )
     cards.add(
         GeneralItemCard(
             drawable = R.drawable.ic_favorite_24px,
-            type = res.getString(R.string.recovered),
+            type = R.string.recovered,
             cases = data.recovery_cases,
-            color = res.getColor(R.color.colorRecovered),
+            color = R.color.colorRecovered,
             lastUpdate = data.last_update
         )
     )
     cards.add(
         GeneralItemCard(
             drawable = R.drawable.ic_face_24px,
-            type = res.getString(R.string.deaths),
+            type = R.string.deaths,
             cases = data.death_cases,
-            color = res.getColor(R.color.colorDead),
+            color = R.color.colorDead,
             lastUpdate = data.last_update
         )
     )

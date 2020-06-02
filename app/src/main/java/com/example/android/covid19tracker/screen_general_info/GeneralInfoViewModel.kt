@@ -1,22 +1,20 @@
 package com.example.android.covid19tracker.screen_general_info
 
-import android.app.Application
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.covid19tracker.domain.GeneralItemCard
 import com.example.android.covid19tracker.domain.GeneralStats
-import com.example.android.covid19tracker.network.CovidApi
-import com.example.android.covid19tracker.network.asDomainModel
-import com.example.android.covid19tracker.network.asDomainModelCards
+import com.example.android.covid19tracker.network.*
 import com.example.android.covid19tracker.util.LoadingStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class GeneralInfoViewModel(val app: Application) : ViewModel() {
+class GeneralInfoViewModel(val service: Covid19Service) : ViewModel() {
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -42,19 +40,22 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
         viewModelJob.cancel()
     }
 
-    private fun getGeneralItems() {
+    @VisibleForTesting
+    internal fun getGeneralItems() {
         _loadingStatus.value = LoadingStatus.LOADING
         coroutineScope.launch {
             try {
-                var getGeneralInfoDeferred = CovidApi.service.getGlobalStats()
+                var getGeneralInfoDeferred = service.getGlobalStats()
                 var generalInfoResult = getGeneralInfoDeferred.await()
-                _generalStats.value = generalInfoResult.asDomainModel()
-                _generalItemCards.value = generalInfoResult.asDomainModelCards(app.resources)
+                // Set the loading status first so we can unit test it later.
+                // Since the status is set multiple times, it is harder to reliabily test.
                 _loadingStatus.value = LoadingStatus.DONE
+                _generalItemCards.value = generalInfoResult.asDomainModelCards()
+                _generalStats.value = generalInfoResult.asDomainModel()
             } catch (e: Exception) {
                 _loadingStatus.value = LoadingStatus.ERROR
-                _generalStats.value = GeneralStats()
                 _generalItemCards.value = ArrayList()
+                _generalStats.value = GeneralStats()
             }
         }
     }
@@ -62,11 +63,11 @@ class GeneralInfoViewModel(val app: Application) : ViewModel() {
     /**
      * Factory for constructing a specific ViewModel with parameter
      */
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(val service: Covid19Service) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(GeneralInfoViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return GeneralInfoViewModel(app) as T
+                return GeneralInfoViewModel(service) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
