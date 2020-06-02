@@ -1,7 +1,5 @@
 package com.example.android.covid19tracker.network
 
-import android.content.res.Resources
-import androidx.lifecycle.Transformations.map
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.domain.GeneralItemCard
 import com.example.android.covid19tracker.domain.GeneralStats

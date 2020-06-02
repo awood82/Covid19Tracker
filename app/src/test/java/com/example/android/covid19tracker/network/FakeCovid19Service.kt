@@ -8,12 +8,19 @@ object FakeCovid19Service: Covid19Service {
     var shouldReturnError = false
     var delay: Long = 0L
 
+    private val defaultGlobalStats = NetworkGeneralStats("100", "40", "50", "10", "N/A")
+    val defaultStats = NetworkGlobalContainer(defaultGlobalStats).asDomainModel()
+
+    fun reset() {
+        shouldReturnError = false
+        delay = 0L
+    }
+
     override fun getGlobalStats(): Deferred<NetworkGlobalContainer> {
         if (shouldReturnError) {
             throw(Exception())
         }
-        val stats = NetworkGeneralStats("100", "40", "50", "10", "N/A")
-        val container = NetworkGlobalContainer(stats)
+        val container = NetworkGlobalContainer(defaultGlobalStats)
         return container.toDeferred(delay)
     }
 
