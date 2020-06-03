@@ -10,12 +10,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
 import com.example.android.covid19tracker.databinding.FragmentRegionBinding
+import com.example.android.covid19tracker.network.CovidApi
+import com.example.android.covid19tracker.screen_general_info.GeneralInfoViewModel
 import com.example.android.covid19tracker.util.RootFragment
 
 class RegionFragment : RootFragment() {
 
     private val viewModel: RegionViewModel by lazy {
-        ViewModelProviders.of(this).get(RegionViewModel::class.java)
+        val activity = requireNotNull(activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        ViewModelProviders.of(this, RegionViewModel.Factory(CovidApi.service))
+            .get(RegionViewModel::class.java)
     }
 
     private var viewModelAdapter: RegionAdapter? = null

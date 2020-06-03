@@ -82,13 +82,13 @@ data class NetworkRegionalStats(
 )
 
 @JsonClass(generateAdapter = true)
-data class NetworkRegionalContainer(
-    val data: NetworkRegionalCountries
+data class NetworkRegionalCountries(
+    val rows: List<NetworkRegionalStats>
 )
 
 @JsonClass(generateAdapter = true)
-data class NetworkRegionalCountries(
-    val rows: List<NetworkRegionalStats>
+data class NetworkRegionalContainer(
+    val data: NetworkRegionalCountries
 )
 
 fun NetworkRegionalContainer.asDomainModel(): List<RegionalStats> {

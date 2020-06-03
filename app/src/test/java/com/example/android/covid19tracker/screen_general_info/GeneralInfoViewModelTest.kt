@@ -3,6 +3,8 @@ package com.example.android.covid19tracker.screen_general_info
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.covid19tracker.getOrAwaitValue
 import com.example.android.covid19tracker.network.FakeCovid19Service
+import com.example.android.covid19tracker.network.NetworkGlobalContainer
+import com.example.android.covid19tracker.network.asDomainModel
 import com.example.android.covid19tracker.util.LoadingStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -50,7 +52,7 @@ class GeneralInfoViewModelTest {
         viewModel.generalItemCards.getOrAwaitValue()
 
         assertThat(viewModel.loadingStatus.value, `is`(LoadingStatus.DONE))
-        val expectedStats = FakeCovid19Service.defaultStats
+        val expectedStats = FakeCovid19Service.defaultGlobalContainer.asDomainModel()
         assertThat(viewModel.generalStats.value, `is`(expectedStats))
     }
 }
