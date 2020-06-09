@@ -24,6 +24,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    android {
+        sourceSets {
+            String sharedTestDir = 'src/sharedTest/java'
+            test {
+                java.srcDir sharedTestDir
+            }
+            androidTest {
+                java.srcDir sharedTestDir
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -50,9 +62,12 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.room:room-runtime:2.2.5'
     testImplementation 'junit:junit:4.12'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
+    androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
@@ -79,6 +94,10 @@ dependencies {
     // Moshi for JSON parsing
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+
+    // For database
+    implementation "androidx.room:room-runtime:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
 
     // Testing
     testImplementation "org.hamcrest:hamcrest-all:$version_hamcrest"

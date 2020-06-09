@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.covid19tracker.R
+import com.example.android.covid19tracker.database.StatsDatabase
 import com.example.android.covid19tracker.databinding.FragmentRegionBinding
 import com.example.android.covid19tracker.network.CovidApi
+import com.example.android.covid19tracker.repository.StatsRepository
 import com.example.android.covid19tracker.screen_general_info.GeneralInfoViewModel
 import com.example.android.covid19tracker.util.RootFragment
 
@@ -20,7 +22,8 @@ class RegionFragment : RootFragment() {
         val activity = requireNotNull(activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProviders.of(this, RegionViewModel.Factory(CovidApi.service))
+        val repo = StatsRepository(StatsDatabase.getInstance(activity.applicationContext), CovidApi.service)
+        ViewModelProviders.of(this, RegionViewModel.Factory(repo))
             .get(RegionViewModel::class.java)
     }
 
@@ -41,7 +44,6 @@ class RegionFragment : RootFragment() {
 
         viewModelAdapter = RegionAdapter(RegionClickListener {
             viewModel.displayRegionalStats(it)
-//            Toast.makeText(activity, "Clicked " + it.name, Toast.LENGTH_SHORT).show()
         })
         binding.root.findViewById<RecyclerView>(R.id.region_recycler).adapter = viewModelAdapter
 

@@ -3,7 +3,7 @@ package com.example.android.covid19tracker.network
 import com.example.android.covid19tracker.toDeferred
 import kotlinx.coroutines.Deferred
 
-object FakeCovid19Service: Covid19Service {
+object FakeService: Covid19Service {
     const val DEFAULT_DELAY = 3000L
 
     var shouldReturnError = false

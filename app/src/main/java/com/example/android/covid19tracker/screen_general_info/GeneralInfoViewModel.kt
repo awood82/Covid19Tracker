@@ -1,10 +1,7 @@
 package com.example.android.covid19tracker.screen_general_info
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.example.android.covid19tracker.domain.GeneralItemCard
 import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.network.*
@@ -17,7 +14,7 @@ import kotlinx.coroutines.launch
 class GeneralInfoViewModel(val service: Covid19Service) : ViewModel() {
 
     private val viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+//    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val _generalStats = MutableLiveData<GeneralStats>()
     val generalStats: LiveData<GeneralStats>
@@ -43,13 +40,14 @@ class GeneralInfoViewModel(val service: Covid19Service) : ViewModel() {
     @VisibleForTesting
     internal fun getGeneralItems() {
         _loadingStatus.value = LoadingStatus.LOADING
-        coroutineScope.launch {
+        //coroutineScope.launch {
+        viewModelScope.launch {
             try {
                 var getGeneralInfoDeferred = service.getGlobalStats()
                 var generalInfoResult = getGeneralInfoDeferred.await()
                 // Set the loading status first so we can unit test it later.
                 // Since the status is set multiple times, it is harder to reliabily test.
-                _loadingStatus.value = LoadingStatus.DONE
+                _loadingStatus.postValue(LoadingStatus.DONE)
                 _generalItemCards.value = generalInfoResult.asDomainModelCards()
                 _generalStats.value = generalInfoResult.asDomainModel()
             } catch (e: Exception) {

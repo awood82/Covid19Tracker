@@ -1,6 +1,7 @@
 package com.example.android.covid19tracker.network
 
 import com.example.android.covid19tracker.R
+import com.example.android.covid19tracker.database.DatabaseRegionalStats
 import com.example.android.covid19tracker.domain.GeneralItemCard
 import com.example.android.covid19tracker.domain.GeneralStats
 import com.example.android.covid19tracker.domain.RegionalStats
@@ -91,9 +92,23 @@ data class NetworkRegionalContainer(
     val data: NetworkRegionalCountries
 )
 
+// TODO: Delete this if unneeded?
 fun NetworkRegionalContainer.asDomainModel(): List<RegionalStats> {
     return data.rows.map {
         RegionalStats(
+            name = it.country,
+            flagUrl = it.flag,
+            totalCases = it.total_cases,
+            infectedCases = it.active_cases,
+            recoveryCases = it.total_recovered,
+            deathCases = it.total_deaths
+        )
+    }
+}
+
+fun NetworkRegionalContainer.asDatabaseModel(): List<DatabaseRegionalStats> {
+    return data.rows.map {
+        DatabaseRegionalStats(
             name = it.country,
             flagUrl = it.flag,
             totalCases = it.total_cases,

@@ -27,7 +27,7 @@ class RegionViewModelTest {
     fun getRegionalInfo_defaultTestResultHasTwoCountries() = runBlockingTest {
         val viewModel = RegionViewModel(service)
 
-        viewModel.getRegionalInfo()
+        viewModel.updateRegionalInfo()
         val results = viewModel.regionalStats.getOrAwaitValue()
 
         val countryNamesMap = results.map { it.name.toLowerCase() }
@@ -40,7 +40,7 @@ class RegionViewModelTest {
         service.shouldReturnError = false
         val viewModel = RegionViewModel(service)
 
-        viewModel.getRegionalInfo()
+        viewModel.updateRegionalInfo()
         val results = viewModel.regionalStats.getOrAwaitValue()
 
         assertThat(results?.size, `is`(regionalResultsSize - 1))
