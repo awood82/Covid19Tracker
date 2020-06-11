@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.covid19tracker.domain.RegionalStats
-import com.example.android.covid19tracker.repository.StatsRepository
+import com.example.android.covid19tracker.repository.IStatsRepository
 import com.example.android.covid19tracker.util.LoadingStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-open class RegionViewModel(internal val repository: StatsRepository) : ViewModel() {
+open class RegionViewModel(internal val repository: IStatsRepository) : ViewModel() {
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -73,7 +73,7 @@ open class RegionViewModel(internal val repository: StatsRepository) : ViewModel
     /**
      * Factory for constructing a specific ViewModel with parameter
      */
-    class Factory(val repository: StatsRepository) : ViewModelProvider.Factory {
+    class Factory(val repository: IStatsRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RegionViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

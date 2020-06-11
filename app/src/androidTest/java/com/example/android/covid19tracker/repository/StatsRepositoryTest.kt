@@ -19,14 +19,14 @@ class StatsRepositoryTest {
     private lateinit var statsRepository: StatsRepository
 
     private lateinit var db: StatsDatabase
-    private lateinit var statsDao: StatsDatabaseDao
+    private lateinit var dao: StatsDatabaseDao
     private lateinit var service: FakeService
 
     @Before
     fun createRepository() {
         createDb()
         service = FakeService
-        statsRepository = StatsRepository(db, service)
+        statsRepository = StatsRepository(dao, service)
     }
 
     fun createDb() {
@@ -35,7 +35,7 @@ class StatsRepositoryTest {
             // Allowing main thread queries, just for testing
             .allowMainThreadQueries()
             .build()
-        statsDao = db.statsDatabaseDao
+        dao = db.statsDatabaseDao
     }
 
     @Test

@@ -22,7 +22,7 @@ class RegionFragment : RootFragment() {
         val activity = requireNotNull(activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        val repo = StatsRepository(StatsDatabase.getInstance(activity.applicationContext), CovidApi.service)
+        val repo = StatsRepository(StatsDatabase.getInstance(activity.applicationContext).statsDatabaseDao, CovidApi.service)
         ViewModelProviders.of(this, RegionViewModel.Factory(repo))
             .get(RegionViewModel::class.java)
     }
