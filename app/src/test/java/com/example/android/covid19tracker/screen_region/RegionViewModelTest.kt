@@ -1,19 +1,16 @@
 package com.example.android.covid19tracker.screen_region
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.covid19tracker.getOrAwaitValue
-import com.example.android.covid19tracker.network.FakeCovid19Service
 import com.example.android.covid19tracker.repository.FakeRepository
-import com.example.android.covid19tracker.util.MainCoroutineScopeRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.Is.`is`
-import org.junit.After
 import org.junit.Assert.*
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.isNotNull
+import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
@@ -62,5 +59,23 @@ class RegionViewModelTest {
 
         val countryNamesMap = results.map { it.name.toLowerCase() }
         assertThat(countryNamesMap.contains("world"), `is`(true))
+    }
+
+    @Test(expected=TimeoutException::class)
+    fun default_noNavToBottomSheetEvent() {
+        val viewModel = RegionViewModel(repository)
+        repository.setStats(FakeRepository.SAMPLE_LIST)
+
+        viewModel.navigateToBottomSheet.getOrAwaitValue()
+    }
+
+    @Test
+    fun displayRegionalStats_setsNavToBottomSheetEvent() {
+        val viewModel = RegionViewModel(repository)
+        repository.setStats(FakeRepository.SAMPLE_LIST)
+
+        viewModel.displayRegionalStats(viewModel.regionalStats.getOrAwaitValue().get(0))
+
+        assertNotNull(viewModel.navigateToBottomSheet.getOrAwaitValue())
     }
 }

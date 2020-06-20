@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.example.android.covid19tracker.repository.IStatsRepository
+import com.example.android.covid19tracker.util.LiveDataEvent
 import com.example.android.covid19tracker.util.LoadingStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +23,8 @@ open class RegionViewModel(internal val repository: IStatsRepository) : ViewMode
     val loadingStatus: LiveData<LoadingStatus>
         get() = _loadingStatus
 
-    private val _navigateToBottomSheet = MutableLiveData<RegionalStats>()
-    val navigateToBottomSheet: LiveData<RegionalStats>
+    private val _navigateToBottomSheet = MutableLiveData<LiveDataEvent<RegionalStats>>()
+    val navigateToBottomSheet: LiveData<LiveDataEvent<RegionalStats>>
         get() = _navigateToBottomSheet
 
     val regionalStats = repository.getRegionalStats()
@@ -62,11 +63,7 @@ open class RegionViewModel(internal val repository: IStatsRepository) : ViewMode
      * Requests another screen to display COVID-19 stats about the country that was just clicked.
      */
     fun displayRegionalStats(region: RegionalStats) {
-        _navigateToBottomSheet.value = region
-    }
-
-    fun displayRegionalStatsComplete() {
-        _navigateToBottomSheet.value = null
+        _navigateToBottomSheet.value = LiveDataEvent(region)
     }
 
 

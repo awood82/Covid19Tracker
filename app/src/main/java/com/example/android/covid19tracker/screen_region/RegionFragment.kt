@@ -48,10 +48,8 @@ class RegionFragment : RootFragment() {
         binding.root.findViewById<RecyclerView>(R.id.region_recycler).adapter = viewModelAdapter
 
         viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (null != it) {
+            it.getContentIfNotHandled()?.let {
                 findNavController().navigate(RegionFragmentDirections.actionRegionFragmentToBottomSheetFragment(it))
-                // Prevent multiple navigations in case the user rotates the screen
-                viewModel.displayRegionalStatsComplete()
             }
         })
 
