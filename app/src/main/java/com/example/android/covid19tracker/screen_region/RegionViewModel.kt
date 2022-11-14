@@ -70,8 +70,8 @@ open class RegionViewModel(internal val repository: IStatsRepository) : ViewMode
     /**
      * Factory for constructing a specific ViewModel with parameter
      */
-    class Factory(val repository: IStatsRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    class Factory(private val repository: IStatsRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RegionViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return RegionViewModel(repository) as T

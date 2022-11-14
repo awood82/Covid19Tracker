@@ -39,7 +39,7 @@ class RegionFragment : RootFragment() {
         setHasOptionsMenu(true)
 
         val binding = FragmentRegionBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
         viewModelAdapter = RegionAdapter(RegionClickListener {
@@ -47,9 +47,9 @@ class RegionFragment : RootFragment() {
         })
         binding.root.findViewById<RecyclerView>(R.id.region_recycler).adapter = viewModelAdapter
 
-        viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                findNavController().navigate(RegionFragmentDirections.actionRegionFragmentToBottomSheetFragment(it))
+        viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { stats ->
+                findNavController().navigate(RegionFragmentDirections.actionRegionFragmentToBottomSheetFragment(stats))
             }
         })
 

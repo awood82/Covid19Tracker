@@ -25,12 +25,12 @@ fun setLoadingStatus(view: ImageView, status: LoadingStatus?) {
             view.visibility = View.VISIBLE
             view.setImageResource(R.drawable.loading_animation)
         }
-        LoadingStatus.ERROR -> {
-            view.visibility = View.VISIBLE
-            view.setImageResource(R.drawable.ic_connection_error)
-        }
         LoadingStatus.DONE -> {
             view.visibility = View.GONE
+        }
+        else -> {
+            view.visibility = View.VISIBLE
+            view.setImageResource(R.drawable.ic_connection_error)
         }
     }
 }

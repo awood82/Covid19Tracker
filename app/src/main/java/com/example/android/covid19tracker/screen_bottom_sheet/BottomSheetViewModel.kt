@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android.covid19tracker.domain.RegionalStats
 
 class BottomSheetViewModel(regionalStats: RegionalStats) : ViewModel() {
@@ -22,8 +23,9 @@ class BottomSheetViewModel(regionalStats: RegionalStats) : ViewModel() {
      */
     class BottomSheetFactory(
         private val regionalStats: RegionalStats) : ViewModelProvider.Factory {
+
         @Suppress("unchecked_cast")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(BottomSheetViewModel::class.java)) {
                 return BottomSheetViewModel(regionalStats) as T
             }

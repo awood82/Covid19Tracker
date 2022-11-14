@@ -26,7 +26,7 @@ class MapFragment : RootFragment(), OnMapReadyCallback {
             .get(MapViewModel::class.java)
     }
 
-    lateinit private var googleMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,14 +39,12 @@ class MapFragment : RootFragment(), OnMapReadyCallback {
         setHasOptionsMenu(true)
 
         val binding = FragmentMapBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (null != it) {
-                findNavController().navigate(MapFragmentDirections.actionMapFragmentToBottomSheetFragment(it))
-                // Prevent multiple navigations in case the user rotates the screen
-                viewModel.displayRegionalStatsComplete()
+        viewModel.navigateToBottomSheet.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { stats ->
+                findNavController().navigate(MapFragmentDirections.actionMapFragmentToBottomSheetFragment(stats))
             }
         })
 

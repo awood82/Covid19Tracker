@@ -34,7 +34,7 @@ class GeneralInfoFragment : RootFragment() {
 
         val binding = FragmentGeneralBinding.inflate(inflater)
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
         viewModelAdapter = GeneralItemAdapter()

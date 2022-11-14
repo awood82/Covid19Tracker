@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.covid19tracker.domain.RegionalStats
 import com.example.android.covid19tracker.network.CovidApi
 import com.example.android.covid19tracker.network.asDomainModel
+import com.example.android.covid19tracker.util.LiveDataEvent
 import kotlinx.coroutines.*
 import java.io.IOException
 
@@ -22,8 +23,8 @@ class MapViewModel(val app: Application) : ViewModel() {
     val regionalStats: LiveData<List<RegionalStats>>
         get() = _regionalStats
 
-    private val _navigateToBottomSheet = MutableLiveData<RegionalStats>()
-    val navigateToBottomSheet: LiveData<RegionalStats>
+    private val _navigateToBottomSheet = MutableLiveData<LiveDataEvent<RegionalStats>>()
+    val navigateToBottomSheet: LiveData<LiveDataEvent<RegionalStats>>
         get() = _navigateToBottomSheet
 
     init {
@@ -33,14 +34,14 @@ class MapViewModel(val app: Application) : ViewModel() {
     private fun getRegionLocations() {
         coroutineScope.launch {
             try {
-                var getRegionalInfoDeferred =
+                val getRegionalInfoDeferred =
                     CovidApi.service.getRegionalStats("total_cases", "desc")
-                var regionalInfoResult = getRegionalInfoDeferred.await()
+                val regionalInfoResult = getRegionalInfoDeferred.await()
                 var stats = regionalInfoResult.asDomainModel()
 
                 // Assumption: The "World" region is still returned in the list of countries
                 // and it shouldn't be displayed.
-                if (stats.get(0).name == "World") {
+                if (stats[0].name == "World") {
                     stats = stats.subList(1, stats.lastIndex + 1)
                 }
 
@@ -58,15 +59,15 @@ class MapViewModel(val app: Application) : ViewModel() {
             for (region in stats) {
                 try {
                     val addressList = geocoder.getFromLocationName(region.name, 1)
-                    if (addressList.isNotEmpty()) {
-                        val location = addressList.get(0)
+                    if (addressList?.isNotEmpty()!!) {
+                        val location = addressList[0]
                         with (region) {
                             latitude = location.latitude
                             longitude = location.longitude
                         }
                     }
                 } catch (e: IOException) {
-                    Log.e("Geocoder error", e.message)
+                    Log.e("Geocoder error", e.message ?: "")
                 }
             }
         }
@@ -76,11 +77,10 @@ class MapViewModel(val app: Application) : ViewModel() {
      * Requests another screen to display COVID-19 stats about the country that was just clicked.
      */
     fun displayRegionalStats(name: String) {
-        _navigateToBottomSheet.value = findRegionByName(name)
-    }
-
-    fun displayRegionalStatsComplete() {
-        _navigateToBottomSheet.value = null
+        val region = findRegionByName(name)
+        region?.let {
+            _navigateToBottomSheet.value = LiveDataEvent(it)
+        }
     }
 
     private fun findRegionByName(name: String): RegionalStats? {
@@ -105,7 +105,7 @@ class MapViewModel(val app: Application) : ViewModel() {
      * Factory for constructing a specific ViewModel with parameter
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return MapViewModel(app) as T

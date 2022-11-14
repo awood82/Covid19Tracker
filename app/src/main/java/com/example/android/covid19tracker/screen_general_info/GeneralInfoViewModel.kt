@@ -62,7 +62,7 @@ class GeneralInfoViewModel(val service: Covid19Service) : ViewModel() {
      * Factory for constructing a specific ViewModel with parameter
      */
     class Factory(val service: Covid19Service) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(GeneralInfoViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return GeneralInfoViewModel(service) as T

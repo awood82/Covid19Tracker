@@ -19,7 +19,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         val binding = FragmentBottomSheetBinding.inflate(inflater)
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val regionalStats: RegionalStats = BottomSheetFragmentArgs.fromBundle(requireArguments()).regionalStats
         val viewModelFactory = BottomSheetViewModel.BottomSheetFactory(regionalStats)

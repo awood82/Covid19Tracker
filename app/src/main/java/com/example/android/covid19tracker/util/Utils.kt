@@ -97,7 +97,7 @@ fun saveScreenshot(bitmap: Bitmap, activity: Activity): Uri {
             activity.resources.getString(R.string.error, e.message),
             Toast.LENGTH_LONG
         ).show()
-        Log.e("saveScreenshot", e.message)
+        Log.e("saveScreenshot", e.message ?: "")
     } finally {
         try {
             out?.close()
