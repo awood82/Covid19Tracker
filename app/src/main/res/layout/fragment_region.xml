@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.covid19tracker.screen_region.RegionViewModel" />
+            type="com.androidandrew.covid19tracker.screen_region.RegionViewModel" />
     </data>
 
     <RelativeLayout

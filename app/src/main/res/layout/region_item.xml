@@ -7,10 +7,10 @@
     <data>
         <variable
             name="region"
-            type="com.example.android.covid19tracker.domain.RegionalStats" />
+            type="com.androidandrew.covid19tracker.domain.RegionalStats" />
         <variable
             name="clickListener"
-            type="com.example.android.covid19tracker.screen_region.RegionClickListener" />
+            type="com.androidandrew.covid19tracker.screen_region.RegionClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

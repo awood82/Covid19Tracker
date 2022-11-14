@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -14,8 +15,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.android.covid19tracker"
-        minSdkVersion 19
+        applicationId "com.androidandrew.covid19tracker"
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -23,18 +24,6 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    android {
-        sourceSets {
-            String sharedTestDir = 'src/sharedTest/java'
-            test {
-                java.srcDir sharedTestDir
-            }
-            androidTest {
-                java.srcDir sharedTestDir
-            }
-        }
     }
 
     buildTypes {
@@ -106,4 +95,7 @@ dependencies {
     testImplementation "androidx.test.ext:junit-ktx:$version_android_x_test_ext_kotlin_runner_version"
     testImplementation "androidx.test:core-ktx:$version_android_x_test_core"
     testImplementation "org.robolectric:robolectric:$version_robolectric"
+
+    testImplementation project(":sharedTest")
+    androidTestImplementation project(":sharedTest")
 }

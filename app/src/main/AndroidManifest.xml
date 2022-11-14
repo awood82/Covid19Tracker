@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.covid19tracker">
+    package="com.androidandrew.covid19tracker">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -21,7 +21,7 @@
         <!-- The provider is used to share the screenshot image with other apps -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.covid19tracker.provider"
+            android:authorities="com.androidandrew.covid19tracker.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <!-- resource file to create -->
@@ -31,23 +31,15 @@
             </meta-data>
         </provider>
 
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="${MAPS_API_KEY}" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.androidandrew.covid19tracker.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

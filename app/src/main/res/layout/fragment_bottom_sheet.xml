@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.covid19tracker.screen_bottom_sheet.BottomSheetViewModel" />
+            type="com.androidandrew.covid19tracker.screen_bottom_sheet.BottomSheetViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +52,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:tint="@color/colorTotalCases"
+            app:tint="@color/colorTotalCases"
             app:layout_constraintTop_toBottomOf="@id/flag_image"
             app:layout_constraintBottom_toTopOf="@+id/infected_image"
             app:layout_constraintStart_toStartOf="parent"

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.covid19tracker.screen_map.MapViewModel" />
+            type="com.androidandrew.covid19tracker.screen_map.MapViewModel" />
     </data>
 
     <FrameLayout

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="general"
-            type="com.example.android.covid19tracker.domain.GeneralItemCard" />
+            type="com.androidandrew.covid19tracker.domain.GeneralItemCard" />
     </data>
 
     <androidx.cardview.widget.CardView

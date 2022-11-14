@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.android.covid19tracker.screen_general_info.GeneralInfoViewModel" />
+            type="com.androidandrew.covid19tracker.screen_general_info.GeneralInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
